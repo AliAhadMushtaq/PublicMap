@@ -12,12 +12,24 @@ namespace Maps.Web.Host.Startup
             CreateHostBuilder(args).Build().Run();
         }
 
-        internal static IHostBuilder CreateHostBuilder(string[] args) =>
-            Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+        //internal static IHostBuilder CreateHostBuilder(string[] args) =>
+        //    Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
+        //        .ConfigureWebHostDefaults(webBuilder =>
+        //        {
+        //            webBuilder.UseStartup<Startup>();
+        //        })
+        //        .UseCastleWindsor(IocManager.Instance.IocContainer);
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+         Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
+        .ConfigureWebHostDefaults(webBuilder =>
+        {
+            webBuilder.UseStartup<Startup>();
+            webBuilder.UseKestrel()
+                .ConfigureKestrel(options =>
                 {
-                    webBuilder.UseStartup<Startup>();
-                })
-                .UseCastleWindsor(IocManager.Instance.IocContainer);
+                    options.ListenAnyIP(5000);
+                });
+        });
     }
 }
