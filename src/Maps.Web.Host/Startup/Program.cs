@@ -16,7 +16,14 @@ namespace Maps.Web.Host.Startup
             Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>()
+                    .UseUrls("https://fastwheels.azurewebsites.net/")
+                .UseKestrel()
+                .ConfigureKestrel(options =>
+                {
+                    options.ListenAnyIP(8080);
+                })
+                .UseIIS();
                 })
                 .UseCastleWindsor(IocManager.Instance.IocContainer);
     }
