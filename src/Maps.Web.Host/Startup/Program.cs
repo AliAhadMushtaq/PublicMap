@@ -12,12 +12,19 @@ namespace Maps.Web.Host.Startup
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
-                
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        internal static IHostBuilder CreateHostBuilder(string[] args) =>
+        Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>()
+              
+            .UseKestrel()
+            .ConfigureKestrel(options =>
+            {
+                options.ListenAnyIP(8080);
+            })
+            
+            })
+            .UseCastleWindsor(IocManager.Instance.IocContainer);
     }
 }
