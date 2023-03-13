@@ -22,7 +22,7 @@ namespace Maps.Web.Host.Startup
             .ConfigureKestrel(options =>
             {
                 options.ListenAnyIP(8080);
-            })
+            });
             
             })
             .UseCastleWindsor(IocManager.Instance.IocContainer);
