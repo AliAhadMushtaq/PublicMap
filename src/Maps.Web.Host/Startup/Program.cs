@@ -12,19 +12,15 @@ namespace Maps.Web.Host.Startup
             CreateHostBuilder(args).Build().Run();
         }
 
-        internal static IHostBuilder CreateHostBuilder(string[] args) =>
-            Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureLogging(logging =>
+                {
+                    logging.AddAzureWebAppDiagnostics();
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>()
-                    .UseUrls("https://fastwheels.azurewebsites.net/")
-                .UseKestrel()
-                .ConfigureKestrel(options =>
-                {
-                    options.ListenAnyIP(8080);
-                })
-                .UseIIS();
-                })
-                .UseCastleWindsor(IocManager.Instance.IocContainer);
+                    webBuilder.UseStartup<Startup>();
+                });
     }
 }
