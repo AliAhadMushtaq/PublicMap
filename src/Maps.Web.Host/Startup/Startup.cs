@@ -91,11 +91,8 @@ namespace Maps.Web.Host.Startup
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.UseAbp(options => { options.UseAbpRequestLocalization = false; }); // Initializes ABP framework.
 
-            app.UseCors(_defaultCorsPolicyName); // Enable CORS!
-
- if (env.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -105,6 +102,10 @@ namespace Maps.Web.Host.Startup
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 //app.UseHsts();
             }
+
+            app.UseAbp(options => { options.UseAbpRequestLocalization = false; }); // Initializes ABP framework.
+
+            app.UseCors(_defaultCorsPolicyName); // Enable CORS!
 
             app.UseStaticFiles();
 
